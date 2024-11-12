@@ -6,18 +6,10 @@ export class Login extends Component {
     constructor(){
         super()
     }
-    componentDidMount(){
-        AuthenticatorAssertionResponse.onAutStateChanged((user)=> {
-            if(user){
-                this.props.navigation.navigate("HomeMenu")
-            }
-        })
-    }
+
   render() {
     return (
-      <div>
-        
-      </div>
+      <div></div>
     )
   }
 }
