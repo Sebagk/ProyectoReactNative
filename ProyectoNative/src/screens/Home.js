@@ -1,18 +1,22 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import HomeMenu from '../components/HomeMenu';
+import { useNavigation } from '@react-navigation/native';  // Importar el hook useNavigation
 
-const Home = (navigation) => {
+const Home = () => {
+  const navigation = useNavigation();  // Usar el hook para acceder al objeto navigation
+
   return (
     <View style={styles.container}>
-      <HomeMenu />
       <Text style={styles.text}>Pantalla de Home</Text>
+
       <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
         <Text style={styles.linkText}>Ir a Profile</Text>
       </TouchableOpacity>
+
       <TouchableOpacity onPress={() => navigation.navigate('Login')}>
         <Text style={styles.linkText}>Ir a Login</Text>
       </TouchableOpacity>
+
       <TouchableOpacity onPress={() => navigation.navigate('Register')}>
         <Text style={styles.linkText}>Ir a Register</Text>
       </TouchableOpacity>
@@ -38,3 +42,4 @@ const styles = StyleSheet.create({
 });
 
 export default Home;
+
