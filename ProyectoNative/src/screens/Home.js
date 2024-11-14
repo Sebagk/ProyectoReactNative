@@ -7,7 +7,7 @@ const Home = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Pantalla de Home</Text>
+      <Text style={styles.text}>Pantalla de Inicio</Text>
 
       <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
         <Text style={styles.linkText}>Ir a Profile</Text>

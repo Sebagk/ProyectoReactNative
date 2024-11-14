@@ -16,20 +16,22 @@ export class Register extends Component {
 
   register = () => {
     const { email, password, userName } = this.state;
-
+  
     if (!email || !password || !userName) {
       this.setState({ error: 'Complete todos los campos de manera correcta.' });
       return;
     }
-
+  
     auth.createUserWithEmailAndPassword(email, password)
       .then(response => {
         this.setState({ registered: true, error: '' });
+        this.props.navigation.navigate('Login');
       })
       .catch(error => {
-        this.setState({ error: 'Error al registrarse: ' + error.message });
+        this.setState({ error: 'Fallo en el registro ' });
       });
   };
+  
 
   render() {
     return (
