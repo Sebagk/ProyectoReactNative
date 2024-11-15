@@ -26,7 +26,7 @@ export class Login extends Component {
     auth.signInWithEmailAndPassword(email, password)
       .then((response) => {
         this.setState({ loggedIn: true});
-        this.props.navigation.navigate('Home');
+        this.props.navigation.navigate('HomeMenu');
       })
       .catch(error => {
         this.setState({ error: 'Credenciales inválidas.' });
@@ -51,13 +51,16 @@ export class Login extends Component {
           style={styles.input}
           keyboardType="default"
           placeholder="Password"
+          secureTextEntry={true}
           onChangeText={(text) => this.setState({ password: text })}
           value={this.state.password}
         />
 
         {this.state.error ? <Text style={styles.errorText}>{this.state.error}</Text> : null}
 
-        <Button title="Login" onPress={this.login} />
+        <TouchableOpacity onPress={()=> this.login()}>
+          <Text>Login</Text>
+        </TouchableOpacity>
 
       </View>
     )
