@@ -15,6 +15,16 @@ export class Login extends Component {
     };
   }
 
+  componentDidMount() {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        console.log("El usuario ya estaba logeado");
+        this.props.navigation.navigate('HomeMenu');
+      }
+    });
+  }
+
+
   login = () => {
     const { email, password } = this.state;
   
@@ -26,7 +36,6 @@ export class Login extends Component {
     auth.signInWithEmailAndPassword(email, password)
       .then((response) => {
         this.setState({ loggedIn: true});
-        this.props.navigation.navigate('HomeMenu');
       })
       .catch(error => {
         this.setState({ error: 'Credenciales inválidas.' });
