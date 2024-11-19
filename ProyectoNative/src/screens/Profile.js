@@ -9,7 +9,7 @@ export class Profile extends Component {
     this.state = {
       email: auth.currentUser.email,
       user: auth.currentUser.user,
-      
+      posts:[]
     };
   }
 
@@ -26,9 +26,9 @@ export class Profile extends Component {
         });
         this.setState({
           posts: postArray,
-          isLoading: false,
         });
-      });
+      }
+      );
   }
   
   
@@ -45,13 +45,22 @@ export class Profile extends Component {
         <View style={styles.infoContainer}>
           <Text style={styles.infoText}>Usuario: {this.state.user}</Text>
           <Text style={styles.infoText}>Email: {this.state.email}</Text>
-          <Text style={styles.infoText}>Cantidad total de posteos: Por ahora 0</Text>
+          <Text style={styles.infoText}>Cantidad de posteos: {this.state.posts.length}</Text>
         </View>
 
         <TouchableOpacity style={styles.logoutButton} onPress={this.Logout}>
           <Text style={styles.logoutText}>Cerrar sesión</Text>
         </TouchableOpacity>
 
+        <FlatList 
+        data={this.state.posts}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <View>
+            <Text>{item.data.text}</Text>
+          </View>
+        )}  
+        />
         
           <Text style={styles.noPostsText}>Aún no hay publicaciones.</Text>
       </View>
