@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Alert } from 'react-native';
 import { db, auth } from '../firebase/config';
 
 export class Profile extends Component {
@@ -9,7 +9,7 @@ export class Profile extends Component {
     this.state = {
       email: auth.currentUser.email,
       user: auth.currentUser.user,
-      posts:[]
+      posts: []
     };
   }
 
@@ -27,15 +27,22 @@ export class Profile extends Component {
         this.setState({
           posts: postArray,
         });
-      }
-      );
+      });
   }
-  
   
   Logout = () => {
     auth.signOut()
       .then(() => this.props.navigation.navigate('Login'))
       .catch(error => console.log(error));
+  };
+
+  deletePost = (postId) => {
+    db.collection("posts")
+      .doc(postId)
+      .delete()
+      .catch((error) => {
+        console.log("Error al eliminar el post: ", error);
+      });
   };
   
   render() {
@@ -53,16 +60,24 @@ export class Profile extends Component {
         </TouchableOpacity>
 
         <FlatList 
-        data={this.state.posts}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <View>
-            <Text>{item.data.text}</Text>
-          </View>
-        )}  
+          data={this.state.posts}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => (
+            <View style={styles.postContainer}>
+              <Text style={styles.postText}>{item.data.text}</Text>
+              <TouchableOpacity 
+                style={styles.deleteButton} 
+                onPress={() => this.deletePost(item.id)}
+              >
+                <Text style={styles.deleteText}>Eliminar</Text>
+              </TouchableOpacity>
+            </View>
+          )}  
         />
         
+        {this.state.posts.length === 0 && (
           <Text style={styles.noPostsText}>Aún no hay publicaciones.</Text>
+        )}
       </View>
     );
   }
@@ -107,6 +122,34 @@ const styles = StyleSheet.create({
   logoutText: {
     color: '#fff',
     fontSize: 16,
+    fontWeight: '600',
+  },
+  postContainer: {
+    backgroundColor: '#fff',
+    padding: 15,
+    marginBottom: 10,
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    elevation: 3,
+  },
+  postText: {
+    fontSize: 16,
+    color: '#333',
+    marginBottom: 10,
+  },
+  deleteButton: {
+    backgroundColor: '#ff4d4d',
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderRadius: 5,
+    alignItems: 'center',
+  },
+  deleteText: {
+    color: '#fff',
+    fontSize: 14,
     fontWeight: '600',
   },
   noPostsText: {

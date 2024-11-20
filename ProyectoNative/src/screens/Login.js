@@ -67,8 +67,12 @@ export class Login extends Component {
 
         {this.state.error ? <Text style={styles.errorText}>{this.state.error}</Text> : null}
 
-        <TouchableOpacity onPress={()=> this.login()}>
-          <Text>Login</Text>
+        <TouchableOpacity style={styles.linkButton} onPress={()=> this.login()}>
+          <Text style={styles.linkText}>Login</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.linkButton} onPress={() => this.props.navigation.navigate('Register')}>
+          <Text style={styles.linkText}>Volver a Register</Text>
         </TouchableOpacity>
 
       </View>
@@ -106,12 +110,17 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   linkButton: {
+    color: "white",
     marginTop: 20,
     padding: 12,
     borderRadius: 8,
     backgroundColor: '#4CAF50',
     alignItems: 'center',
-  }
+  },
+  linkText: {
+    color: "white",
+    fontSize:16
+  },
 });
 
 

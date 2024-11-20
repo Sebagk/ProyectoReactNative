@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, TextInput, StyleSheet, Button, TouchableOpacity } from 'react-native';
-import { auth, db } from '../firebase/config';
+import { auth } from '../firebase/config';
 
 export class Register extends Component {
   constructor(props) {
@@ -16,37 +16,20 @@ export class Register extends Component {
 
   register = () => {
     const { email, password, userName } = this.state;
-  
+
     if (!email || !password || !userName) {
       this.setState({ error: 'Complete todos los campos de manera correcta.' });
       return;
     }
 
-  
     auth.createUserWithEmailAndPassword(email, password)
       .then(response => {
-        if (response) {
-          db.collection("users")
-            .add({
-              email: email,
-              username: userName,
-              createdAt: Date.now()
-            })
-            .then((response) => {
-              this.setState({ registered: true, error: '' });
-              this.props.navigation.navigate('Login')
-              console.log(response);
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-        }
+        this.setState({ registered: true, error: '' });
       })
       .catch(error => {
-        this.setState({  error: `Fallo en el registro: ${error.message}`});
+        this.setState({ error: 'Error al registrarse: ' + error.message });
       });
   };
-  
 
   render() {
     return (
@@ -73,14 +56,18 @@ export class Register extends Component {
           style={styles.input}
           keyboardType="default"
           placeholder="Password"
-          secureTextEntry={true}
           onChangeText={(text) => this.setState({ password: text })}
           value={this.state.password}
         />
 
         {this.state.error ? <Text style={styles.errorText}>{this.state.error}</Text> : null}
 
-        <Button title="Register" onPress={this.register} />
+        <TouchableOpacity
+          style={styles.linkButton}
+          onPress={() => this.register()}
+        >
+          <Text style={styles.linkText}>Registrarse</Text>
+        </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.linkButton}
