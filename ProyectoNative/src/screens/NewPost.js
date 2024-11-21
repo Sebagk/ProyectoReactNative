@@ -34,6 +34,7 @@ export class NewPost extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <Text style={styles.title}>Crear post</Text>
         <TextInput
           style={styles.input}
           keyboardType="default"
@@ -56,6 +57,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 16,
+    textAlign: 'center',
   },
   input: {
     width: '100%',
