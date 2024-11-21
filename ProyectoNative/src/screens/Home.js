@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
-import { auth, db } from "../firebase/config";
-import { Component } from 'react';
-
+import { db } from "../firebase/config";
+import Post from '../components/Post';  // Importamos el componente Post
 
 class Home extends Component {
   constructor() {
@@ -12,16 +11,18 @@ class Home extends Component {
       loading: true,
     };
   }
+
   componentDidMount() {
     this.setState({
       loading: true,
     });
+
     db.collection("posts").onSnapshot((docs) => {
       let posts = [];
       docs.forEach((doc) => {
         posts.push({
           id: doc.id,
-          data: doc.data,
+          data: doc.data(),
         });
       });
       this.setState({
@@ -30,22 +31,28 @@ class Home extends Component {
       });
     });
   }
+
+  handleDelete = (postId) => {
+    this.setState((prevState) => ({
+      posts: prevState.posts.filter(post => post.id !== postId),
+    }));
+  };
+
   render() {
     return (
       <View style={styles.container}>
         <Text style={styles.text}>Pantalla de Home</Text>
-        <TouchableOpacity onPress={() => this.props.navigation.navigate("Login")}>
-          <Text style={styles.linkText}>Ir a Login</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => this.props.navigation.navigate("Register")}>
-          <Text style={styles.linkText}>Ir a Register</Text>
-        </TouchableOpacity>
-        {/* {!this.state.loading && <FlatList
-          data={this.state.posts}
-          keyExtractor={(post) => post.id}
-          renderItem={({ item }) => <Text>{item.data.text}</Text>}
-        />} */}
         
+        <FlatList
+          data={this.state.posts}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => (
+            <Post post={item} onDelete={this.handleDelete} />
+          )}
+          ListEmptyComponent={
+            !this.state.loading && <Text>No hay publicaciones disponibles</Text>
+          }
+        />
       </View>
     );
   }
@@ -56,6 +63,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    padding: 20,
   },
   text: {
     fontSize: 24,
