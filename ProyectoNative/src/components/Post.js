@@ -38,7 +38,9 @@ class Post extends Component {
 const styles = StyleSheet.create({
   postContainer: {
     backgroundColor: '#fff',
-    padding: 18,
+    paddingBottom: 20,
+    paddingTop: 20,
+    paddingHorizontal: 100,
     marginBottom: 16,
     borderRadius: 12,
     shadowColor: '#000',

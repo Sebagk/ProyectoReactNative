@@ -16,7 +16,7 @@ export class Profile extends Component {
 
   componentDidMount() {
     db.collection("posts")
-      .orderBy("createdAt", "desc")
+      .where("owner", "==", auth.currentUser.email)
       .onSnapshot((docs) => {
         let postArray = [];
         docs.forEach((doc) => {
@@ -25,11 +25,14 @@ export class Profile extends Component {
             data: doc.data(),
           });
         });
+        postArray.sort((a, b) => b.data.createdAt - a.data.createdAt);
+        console.log("Usuario logeado:", auth.currentUser.email);
         this.setState({
-          posts: postArray,
+          posts: postArray
         });
       });
   }
+  
 
   Logout = () => {
     auth.signOut()
