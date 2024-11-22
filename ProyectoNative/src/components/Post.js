@@ -1,13 +1,25 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { db } from '../firebase/config';
+import { db, auth } from '../firebase/config';
+import firebase from 'firebase';
 
 class Post extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      like: false,
+      cantidad: this.props.post.data.likes.length,
+
+    };
   }
 
+  componentDidMount() {
+    if (this.props.post.data.likes.includes(auth.currentUser.email)) {
+      this.setState({
+        like: true,
+      });
+    }
+  }
   deletePost = () => {
     const { post } = this.props;
 
@@ -22,11 +34,48 @@ class Post extends Component {
       });
   };
 
+  handlelLike() {
+    db.collection("posts")
+      .doc(this.props.post.id)
+      .update({
+        likes: firebase.firestore.FieldValue.arrayUnion(this.props.post.data.owner),
+      })
+      .then(() =>
+        this.setState({
+          like: true,
+          cantidad: this.props.post.data.likes.length,
+        })
+      );
+  }
+  handlelUnLike() {
+    db.collection("posts")
+      .doc(this.props.post.id)
+      .update({
+        likes: firebase.firestore.FieldValue.arrayRemove(this.props.post.data.owner),
+      })
+      .then(() =>
+        this.setState({
+          like: false,
+          cantidad: this.props.post.data.likes.length,
+        })
+      );
+  }
   render() {
     const { post } = this.props; 
     return (
       <View style={styles.postContainer}>
+        <Text>{post.data.owner}</Text>
         <Text style={styles.postText}>{post.data.text}</Text>
+        {this.state.like ? (
+          <TouchableOpacity onPress={() => this.handlelUnLike()}>
+            <Text>Ya on me gusta</Text>
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity onPress={()=> this.handlelLike()}>
+            <Text>Like</Text>
+          </TouchableOpacity>
+        )}
+        <Text>Cantidad de likes: {this.state.cantidad}</Text>
         <TouchableOpacity style={styles.deleteButton} onPress={this.deletePost}>
           <Text style={styles.deleteText}>Eliminar</Text>
         </TouchableOpacity>
