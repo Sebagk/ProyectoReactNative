@@ -20,6 +20,7 @@ export class NewPost extends Component {
       .add({
         owner: auth.currentUser.email,
         text: this.state.text,
+        likes:[],
         createdAt: Date.now(),
       })
       .then((response) => {

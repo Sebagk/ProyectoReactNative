@@ -32,10 +32,19 @@ class Home extends Component {
     });
   }
 
-  handleDelete = (postId) => {
-    this.setState((prevState) => ({
-      posts: prevState.posts.filter(post => post.id !== postId),
-    }));
+  deletePost = (postId) => {
+    db.collection("posts")
+      .doc(postId)
+      .delete()
+      .then(() => {
+        const postNew = this.state.userPosts.filter(post => post.id !== postId);
+        this.setState({
+          posts : postNew
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   render() {
@@ -47,7 +56,7 @@ class Home extends Component {
           data={this.state.posts}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
-            <Post post={item} onDelete={this.handleDelete} />
+            <Post post={item} onDelete={this.deletePost} />
           )}
           ListEmptyComponent={
             !this.state.loading && <Text>No hay publicaciones disponibles</Text>
