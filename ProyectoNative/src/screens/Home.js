@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
 import { db } from "../firebase/config";
-import Post from '../components/Post';  // Importamos el componente Post
+import Post from '../components/Post';  
 
 class Home extends Component {
   constructor() {
@@ -37,7 +37,7 @@ class Home extends Component {
       .doc(postId)
       .delete()
       .then(() => {
-        const postNew = this.state.userPosts.filter(post => post.id !== postId);
+        const postNew = this.state.posts.filter(post => post.id !== postId);
         this.setState({
           posts : postNew
         });
@@ -56,7 +56,7 @@ class Home extends Component {
           data={this.state.posts}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
-            <Post post={item} onDelete={this.deletePost} />
+            <Post post={item} onDelete={this.deletePost} showDeleteButton={false} />  
           )}
           ListEmptyComponent={
             !this.state.loading && <Text>No hay publicaciones disponibles</Text>

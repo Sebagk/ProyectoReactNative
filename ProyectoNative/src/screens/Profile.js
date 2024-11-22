@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import { db, auth } from '../firebase/config';
-import Post from '../components/Post';  // Importamos el componente Post
+import Post from '../components/Post';  
 
 export class Profile extends Component {
   
@@ -75,7 +75,8 @@ export class Profile extends Component {
           renderItem={({ item }) => (
             <Post 
               post={item}  
-              onDelete={this.deletePost}  
+              onDelete={this.deletePost}
+              showDeleteButton={true}  
             />
           )}  
         />

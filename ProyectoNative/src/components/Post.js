@@ -9,7 +9,6 @@ class Post extends Component {
     this.state = {
       like: false,
       cantidad: this.props.post.data.likes.length,
-
     };
   }
 
@@ -20,6 +19,7 @@ class Post extends Component {
       });
     }
   }
+
   deletePost = () => {
     const { post } = this.props;
 
@@ -47,6 +47,7 @@ class Post extends Component {
         })
       );
   }
+
   handlelUnLike() {
     db.collection("posts")
       .doc(this.props.post.id)
@@ -60,25 +61,28 @@ class Post extends Component {
         })
       );
   }
+
   render() {
-    const { post } = this.props; 
+    const { post, showDeleteButton } = this.props;  
     return (
       <View style={styles.postContainer}>
         <Text>{post.data.owner}</Text>
         <Text style={styles.postText}>{post.data.text}</Text>
         {this.state.like ? (
           <TouchableOpacity onPress={() => this.handlelUnLike()}>
-            <Text>Ya on me gusta</Text>
+            <Text>Ya me gusta</Text>
           </TouchableOpacity>
         ) : (
-          <TouchableOpacity onPress={()=> this.handlelLike()}>
+          <TouchableOpacity onPress={() => this.handlelLike()}>
             <Text>Like</Text>
           </TouchableOpacity>
         )}
         <Text>Cantidad de likes: {this.state.cantidad}</Text>
-        <TouchableOpacity style={styles.deleteButton} onPress={this.deletePost}>
-          <Text style={styles.deleteText}>Eliminar</Text>
-        </TouchableOpacity>
+        {showDeleteButton && (  
+          <TouchableOpacity style={styles.deleteButton} onPress={this.deletePost}>
+            <Text style={styles.deleteText}>Eliminar</Text>
+          </TouchableOpacity>
+        )}
       </View>
     );
   }
