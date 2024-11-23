@@ -33,7 +33,6 @@ export class Profile extends Component {
       });
   }
   
-
   Logout = () => {
     auth.signOut()
       .then(() => this.props.navigation.navigate('Login'))
@@ -43,15 +42,17 @@ export class Profile extends Component {
   deletePost = (postId) => {
     db.collection("posts")
       .doc(postId)
-      .delete()
+      .update({
+        posts: firebase.firestore.FieldValue.arrayRemove(postId) 
+      })
       .then(() => {
-        const postNew = this.state.userPosts.filter(post => post.id !== postId);
+        const updatedPosts = this.state.posts.filter(post => post.id !== postId);
         this.setState({
-          posts : postNew
+          posts: updatedPosts
         });
       })
       .catch((error) => {
-        console.log(error);
+        console.log("Error:", error);
       });
   };
 
