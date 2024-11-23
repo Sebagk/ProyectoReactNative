@@ -1,16 +1,13 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, StyleSheet, Button, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import { auth } from '../firebase/config';
-
 
 export class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
       email: '',
-      userName: '',
       password: '',
-      loggedIn: false,
       error: '',
     };
   }
@@ -19,29 +16,28 @@ export class Login extends Component {
     auth.onAuthStateChanged((user) => {
       if (user) {
         console.log("El usuario ya estaba logeado");
-        this.props.navigation.navigate('HomeMenu');
+        this.props.navigation.navigate('HomeMenu'); 
       }
     });
   }
 
-
   login = () => {
     const { email, password } = this.state;
-  
+
     if (!email || !password) {
       this.setState({ error: 'Complete todos los campos de manera correcta.' });
       return;
     }
-  
+
     auth.signInWithEmailAndPassword(email, password)
-      .then((response) => {
-        this.setState({ loggedIn: true});
+      .then(() => {
+        this.setState({ error: '' });
+        this.props.navigation.navigate('HomeMenu');
       })
       .catch(error => {
         this.setState({ error: 'Credenciales inválidas.' });
       });
   };
-  ;
 
   render() {
     return (
@@ -58,7 +54,6 @@ export class Login extends Component {
 
         <TextInput
           style={styles.input}
-          keyboardType="default"
           placeholder="Password"
           secureTextEntry={true}
           onChangeText={(text) => this.setState({ password: text })}
@@ -67,16 +62,15 @@ export class Login extends Component {
 
         {this.state.error ? <Text style={styles.errorText}>{this.state.error}</Text> : null}
 
-        <TouchableOpacity style={styles.linkButton} onPress={()=> this.login()}>
+        <TouchableOpacity style={styles.linkButton} onPress={this.login}>
           <Text style={styles.linkText}>Login</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.linkButton} onPress={() => this.props.navigation.navigate('Register')}>
           <Text style={styles.linkText}>Volver a Register</Text>
         </TouchableOpacity>
-
       </View>
-    )
+    );
   }
 }
 
@@ -110,7 +104,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   linkButton: {
-    color: "white",
     marginTop: 20,
     padding: 12,
     borderRadius: 8,
@@ -118,10 +111,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   linkText: {
-    color: "white",
-    fontSize:16
+    color: 'white',
+    fontSize: 16,
   },
 });
 
-
-export default Login
+export default Login;
