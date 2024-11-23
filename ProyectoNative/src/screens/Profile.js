@@ -9,7 +9,7 @@ export class Profile extends Component {
     super(props);
     this.state = {
       email: auth.currentUser.email,
-      user: auth.currentUser.userName,
+      user: null,
       posts: []
     };
   }
@@ -31,6 +31,18 @@ export class Profile extends Component {
           posts: postArray
         });
       });
+        db.collection('users')
+            .where('email', '==', auth.currentUser.email)
+            .onSnapshot(snapshot => {
+                if (true) {
+                    const userDoc = snapshot.docs[0];
+                    const userData = userDoc.data();
+                    console.log(userData);
+                    this.setState({
+                        user: userData.username
+                    });
+                }
+            });
   }
   
   Logout = () => {
