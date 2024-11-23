@@ -38,7 +38,7 @@ class Post extends Component {
     db.collection("posts")
       .doc(this.props.post.id)
       .update({
-        likes: firebase.firestore.FieldValue.arrayUnion(this.props.post.data.owner),
+        likes: firebase.firestore.FieldValue.arrayUnion(auth.currentUser.email),
       })
       .then(() =>
         this.setState({
@@ -52,7 +52,7 @@ class Post extends Component {
     db.collection("posts")
       .doc(this.props.post.id)
       .update({
-        likes: firebase.firestore.FieldValue.arrayRemove(this.props.post.data.owner),
+        likes: firebase.firestore.FieldValue.arrayRemove(auth.currentUser.email),
       })
       .then(() =>
         this.setState({
@@ -70,7 +70,7 @@ class Post extends Component {
         <Text style={styles.postText}>{post.data.text}</Text>
         {this.state.like ? (
           <TouchableOpacity onPress={() => this.handlelUnLike()}>
-            <Text>Ya me gusta</Text>
+            <Text>Dislike</Text>
           </TouchableOpacity>
         ) : (
           <TouchableOpacity onPress={() => this.handlelLike()}>
