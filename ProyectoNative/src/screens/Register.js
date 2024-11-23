@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, TextInput, StyleSheet, Button, TouchableOpacity } from 'react-native';
-import { auth } from '../firebase/config';
+import { db, auth } from '../firebase/config';
 
 export class Register extends Component {
   constructor(props) {
@@ -23,10 +23,24 @@ export class Register extends Component {
     }
 
     auth.createUserWithEmailAndPassword(email, password)
-      .then(response => {
-        this.setState({ registered: true, error: '' });
+      .then((response) => {
+        if (response) {
+          db.collection('users')
+            .add({
+              email: email,
+              username: userName,
+              createdAt: Date.now(),
+            })
+            .then(() => {
+              this.setState({ registered: true, error: '' });
+              this.props.navigation.navigate('Login');
+            })
+            .catch((error) => {
+              this.setState({ error: 'Error al guardar datos del usuario: ' + error.message });
+            });
+        }
       })
-      .catch(error => {
+      .catch((error) => {
         this.setState({ error: 'Error al registrarse: ' + error.message });
       });
   };
