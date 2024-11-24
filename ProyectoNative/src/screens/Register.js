@@ -13,6 +13,14 @@ export class Register extends Component {
       error: '',
     };
   }
+  componentDidMount() {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        console.log("El usuario ya estaba logeado");
+        this.props.navigation.navigate('HomeMenu'); 
+      }
+    });
+  }
 
   register = () => {
     const { email, password, userName } = this.state;
