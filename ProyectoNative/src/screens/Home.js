@@ -1,7 +1,13 @@
-import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
+import React, { Component } from "react";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  FlatList,
+} from "react-native";
 import { db } from "../firebase/config";
-import Post from '../components/Post';  
+import Post from "../components/Post";
 
 class Home extends Component {
   constructor() {
@@ -17,19 +23,21 @@ class Home extends Component {
       loading: true,
     });
 
-    db.collection("posts").onSnapshot((docs) => {
-      let posts = [];
-      docs.forEach((doc) => {
-        posts.push({
-          id: doc.id,
-          data: doc.data(),
+    db.collection("posts")
+      .orderBy("createdAt", "desc")
+      .onSnapshot((docs) => {
+        let posts = [];
+        docs.forEach((doc) => {
+          posts.push({
+            id: doc.id,
+            data: doc.data(),
+          });
+        });
+        this.setState({
+          posts: posts,
+          loading: false,
         });
       });
-      this.setState({
-        posts: posts,
-        loading: false,
-      });
-    });
   }
 
   deletePost = (postId) => {
@@ -37,9 +45,9 @@ class Home extends Component {
       .doc(postId)
       .delete()
       .then(() => {
-        const postNew = this.state.posts.filter(post => post.id !== postId);
+        const postNew = this.state.posts.filter((post) => post.id !== postId);
         this.setState({
-          posts : postNew
+          posts: postNew,
         });
       })
       .catch((error) => {
@@ -51,12 +59,16 @@ class Home extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.text}>Pantalla de Home</Text>
-        
+
         <FlatList
           data={this.state.posts}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
-            <Post post={item} onDelete={this.deletePost} showDeleteButton={false} />  
+            <Post
+              post={item}
+              onDelete={this.deletePost}
+              showDeleteButton={false}
+            />
           )}
           ListEmptyComponent={
             !this.state.loading && <Text>No hay publicaciones disponibles</Text>

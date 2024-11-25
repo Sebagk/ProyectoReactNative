@@ -25,7 +25,6 @@ export class NewPost extends Component {
       })
       .then((response) => {
         this.props.navigation.navigate("Home");
-        console.log(response);
       })
       .catch((err) => {
         console.log(err);
