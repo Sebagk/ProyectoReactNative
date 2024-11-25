@@ -8,6 +8,7 @@ import {
 import { db } from "../firebase/config";
 import Post from "../components/Post";
 
+
 class Home extends Component {
   constructor() {
     super();
@@ -69,6 +70,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 20,
+    backgroundColor: '#ecf0f1',
   },
   text: {
     fontSize: 30,

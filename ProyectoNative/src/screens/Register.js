@@ -106,42 +106,49 @@ export class Register extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    padding: 25,
+    backgroundColor: '#ecf0f1',
+  },
+  header: {
+    fontSize: 32,
+    fontWeight: '800',
+    color: '#2c3e50',
+    marginBottom: 25,
+    textAlign: 'center',
+  },
+  infoContainer: {
+    marginBottom: 25,
     padding: 20,
-    backgroundColor: '#f9f9f9',
+    backgroundColor: '#ffffff',
+    borderRadius: 12,
+    shadowColor: '#34495e',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.15,
+    shadowRadius: 7,
+    elevation: 4,
   },
-  title: {
-    fontSize: 30,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 40,
-    color: '#333',
+  infoText: {
+    fontSize: 18,
+    color: '#7f8c8d',
+    marginBottom: 8,
   },
-  input: {
-    height: 45,
-    borderColor: '#ddd',
-    borderWidth: 1,
-    marginBottom: 15,
-    paddingLeft: 10,
-    borderRadius: 8,
-    backgroundColor: '#fff',
-  },
-  errorText: {
-    color: 'red',
-    fontSize: 14,
-    marginBottom: 10,
-    textAlign: 'center',
-  },
-  linkButton: {
-    marginTop: 20,
-    padding: 12,
-    borderRadius: 8,
-    backgroundColor: '#4CAF50',
+  logoutButton: {
+    backgroundColor: '#e74c3c',
+    paddingVertical: 12,
+    borderRadius: 12,
     alignItems: 'center',
+    marginBottom: 25,
   },
-  linkText: {
-    color: 'white',
-    fontSize: 16,
+  logoutText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: '700',
+  },
+  noPostsText: {
+    textAlign: 'center',
+    color: '#bdc3c7',
+    fontSize: 18,
+    marginTop: 25,
   },
 });
 

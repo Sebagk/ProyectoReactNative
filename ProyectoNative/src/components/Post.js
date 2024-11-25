@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { db, auth } from '../firebase/config';
 import firebase from 'firebase';
+import Icon from 'react-native-vector-icons/AntDesign';
 
 class Post extends Component {
   constructor(props) {
@@ -68,15 +69,13 @@ class Post extends Component {
       <View style={styles.postContainer}>
         <Text>{post.data.owner}</Text>
         <Text style={styles.postText}>{post.data.text}</Text>
-        {this.state.like ? (
-          <TouchableOpacity onPress={() => this.handlelUnLike()}>
-            <Text>Dislike</Text>
-          </TouchableOpacity>
-        ) : (
-          <TouchableOpacity onPress={() => this.handlelLike()}>
-            <Text>Like</Text>
-          </TouchableOpacity>
-        )}
+        <TouchableOpacity onPress={() => this.state.like ? this.handlelUnLike() : this.handlelLike()}>
+          <Icon
+            name={this.state.like ? "like1" : "like2"}
+            size={30}
+            color={this.state.like ? "blue" : "gray"}
+          />
+        </TouchableOpacity>
         <Text>Cantidad de likes: {this.state.cantidad}</Text>
         {showDeleteButton && (
           <TouchableOpacity style={styles.deleteButton} onPress={this.deletePost}>
@@ -90,36 +89,39 @@ class Post extends Component {
 
 const styles = StyleSheet.create({
   postContainer: {
-    backgroundColor: '#fff',
-    paddingBottom: 20,
-    paddingTop: 20,
-    paddingHorizontal: 100,
-    marginBottom: 16,
-    borderRadius: 12,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.15,
-    shadowRadius: 6,
-    elevation: 4,
+    backgroundColor: '#fafafa',
+    paddingVertical: 25,
+    paddingHorizontal: 18,
+    marginBottom: 22,
+    borderRadius: 15,
+    borderWidth: 1,
+    borderColor: '#dcdcdc',
+    shadowColor: '#bbb',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 8,
+    elevation: 5,
   },
   postText: {
-    fontSize: 18,
-    color: '#333',
-    lineHeight: 24,
-    marginBottom: 12,
+    fontSize: 20,
+    color: '#444',
+    lineHeight: 28,
+    marginBottom: 15,
+    fontFamily: 'Arial',
   },
   deleteButton: {
-    backgroundColor: '#ff4d4d',
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    borderRadius: 8,
+    backgroundColor: '#ff3b30',
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    borderRadius: 10,
     alignItems: 'center',
-    marginTop: 8,
+    marginTop: 12,
   },
   deleteText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '500',
+    color: '#ffffff',
+    fontSize: 18,
+    fontWeight: '700',
+    fontFamily: 'Arial',
   },
 });
 
