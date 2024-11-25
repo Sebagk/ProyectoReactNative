@@ -31,7 +31,6 @@ class Post extends Component {
         this.props.onDelete(post.id);
       })
       .catch((error) => {
-        console.log("Error al eliminar el post: ", error);
       });
   };
 

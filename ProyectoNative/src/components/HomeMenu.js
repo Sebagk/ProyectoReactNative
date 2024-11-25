@@ -17,7 +17,7 @@ import React, { Component } from "react";
 export class HomeMenu extends Component {
   render() {
     return (
-      <Tab.Navigator>
+      <Tab.Navigator screenOptions={{tabBarShowLabel: false}}>
         <Tab.Screen
           options={{
             tabBarIcon: () => <Ionicons name="home-outline" size={24} color="black" />,

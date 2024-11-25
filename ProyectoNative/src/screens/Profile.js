@@ -26,7 +26,6 @@ export class Profile extends Component {
           });
         });
         postArray.sort((a, b) => b.data.createdAt - a.data.createdAt);
-        console.log("Usuario logeado:", auth.currentUser.email);
         this.setState({
           posts: postArray
         });
@@ -37,7 +36,6 @@ export class Profile extends Component {
         if (true) {
           const userDoc = snapshot.docs[0];
           const userData = userDoc.data();
-          console.log(userData);
           this.setState({
             user: userData.username
           });
@@ -48,7 +46,7 @@ export class Profile extends Component {
   Logout = () => {
     auth.signOut()
       .then(() => this.props.navigation.navigate('Login'))
-      .catch(error => console.log(error));
+      .catch(error);
   };
 
 

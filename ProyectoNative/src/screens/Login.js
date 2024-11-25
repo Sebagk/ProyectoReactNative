@@ -15,7 +15,6 @@ export class Login extends Component {
   componentDidMount() {
     auth.onAuthStateChanged((user) => {
       if (user) {
-        console.log("El usuario ya estaba logeado");
         this.props.navigation.navigate('HomeMenu');
       }
     });
