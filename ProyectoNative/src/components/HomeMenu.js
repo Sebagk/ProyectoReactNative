@@ -22,30 +22,33 @@ export class HomeMenu extends Component {
           options={{
             tabBarIcon: () => <Ionicons name="home-outline" size={24} color="black" />,
             headerShown: false
-        }}
+          }}
           name="Home"
           component={Home}
         />
 
         <Tab.Screen
-          options={{ 
+          options={{
             tabBarIcon: () => <AntDesign name="profile" size={24} color="black" />,
-            headerShown: false }}
+            headerShown: false
+          }}
           name="Profile"
           component={Profile}
         />
 
         <Tab.Screen
-          options={{ 
+          options={{
             tabBarIcon: () => <Feather name="users" size={24} color="black" />,
-            headerShown: false }}
+            headerShown: false
+          }}
           name="Users"
           component={Users}
         />
         <Tab.Screen
-          options={{ 
+          options={{
             tabBarIcon: () => <MaterialIcons name="post-add" size={24} color="black" />,
-            headerShown: false }}
+            headerShown: false
+          }}
           name="NewPost"
           component={NewPost}
         />

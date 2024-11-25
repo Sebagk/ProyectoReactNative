@@ -28,13 +28,13 @@ export class Users extends Component {
     });
   }
 
-  handleSearch(userValue){
+  handleSearch(userValue) {
     this.setState({
       search: userValue,
       filteredUsuarios: this.state.usuarios.filter(user => user.data.username.toLowerCase().includes(userValue.toLowerCase()))
     })
   }
-  handleResetFilter(){
+  handleResetFilter() {
     this.setState({
       search: "",
       filteredUsuarios: this.state.usuarios
@@ -52,24 +52,24 @@ export class Users extends Component {
             style={styles.searchInput}
             placeholder="Buscar usuario"
             value={this.state.search}
-            onChangeText={(text) => this.handleSearch(text)} 
+            onChangeText={(text) => this.handleSearch(text)}
           />
           <Text style={styles.resetButton} onPress={() => this.handleResetFilter()}>
             Limpiar
           </Text>
         </View>
         {this.state.filteredUsuarios.length > 0 ? (<FlatList
-          data={this.state.filteredUsuarios} 
+          data={this.state.filteredUsuarios}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
             <View style={styles.userItem}>
               <Text style={styles.username}>{item.data.username}</Text>
             </View>
           )}
-        />):(<Text style={styles.noResultsText}>
+        />) : (<Text style={styles.noResultsText}>
           El Usuario no existe
         </Text>)}
-        
+
       </View>
     );
   }
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#f5f5f5",
   },
   title: {
-    fontSize: 24,
+    fontSize: 30,
     fontWeight: "bold",
     marginBottom: 16,
     textAlign: "center",
@@ -110,15 +110,18 @@ const styles = StyleSheet.create({
   searchInput: {
     flex: 1,
     borderColor: "#ccc",
+    fontSize: 16,
     borderWidth: 1,
     borderRadius: 8,
-    padding: 8,
+    padding: 20,
     marginRight: 8,
   },
   resetButton: {
     color: "#007BFF",
+    textAlign: "center",
     fontWeight: "bold",
-    fontSize: 16,
+    fontSize: 15,
+    padding: 20
   },
 });
 

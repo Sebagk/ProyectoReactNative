@@ -27,7 +27,7 @@ class Post extends Component {
       .doc(post.id)
       .delete()
       .then(() => {
-        this.props.onDelete(post.id); 
+        this.props.onDelete(post.id);
       })
       .catch((error) => {
         console.log("Error al eliminar el post: ", error);
@@ -63,7 +63,7 @@ class Post extends Component {
   }
 
   render() {
-    const { post, showDeleteButton } = this.props;  
+    const { post, showDeleteButton } = this.props;
     return (
       <View style={styles.postContainer}>
         <Text>{post.data.owner}</Text>
@@ -78,7 +78,7 @@ class Post extends Component {
           </TouchableOpacity>
         )}
         <Text>Cantidad de likes: {this.state.cantidad}</Text>
-        {showDeleteButton && (  
+        {showDeleteButton && (
           <TouchableOpacity style={styles.deleteButton} onPress={this.deletePost}>
             <Text style={styles.deleteText}>Eliminar</Text>
           </TouchableOpacity>

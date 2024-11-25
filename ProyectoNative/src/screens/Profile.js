@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import { db, auth } from '../firebase/config';
-import Post from '../components/Post';  
+import Post from '../components/Post';
 
 export class Profile extends Component {
-  
+
   constructor(props) {
     super(props);
     this.state = {
@@ -31,20 +31,20 @@ export class Profile extends Component {
           posts: postArray
         });
       });
-        db.collection('users')
-            .where('email', '==', auth.currentUser.email)
-            .onSnapshot(snapshot => {
-                if (true) {
-                    const userDoc = snapshot.docs[0];
-                    const userData = userDoc.data();
-                    console.log(userData);
-                    this.setState({
-                        user: userData.username
-                    });
-                }
-            });
+    db.collection('users')
+      .where('email', '==', auth.currentUser.email)
+      .onSnapshot(snapshot => {
+        if (true) {
+          const userDoc = snapshot.docs[0];
+          const userData = userDoc.data();
+          console.log(userData);
+          this.setState({
+            user: userData.username
+          });
+        }
+      });
   }
-  
+
   Logout = () => {
     auth.signOut()
       .then(() => this.props.navigation.navigate('Login'))
@@ -66,18 +66,18 @@ export class Profile extends Component {
           <Text style={styles.logoutText}>Cerrar sesión</Text>
         </TouchableOpacity>
 
-        <FlatList 
+        <FlatList
           data={this.state.posts}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
-            <Post 
-              post={item}  
+            <Post
+              post={item}
               onDelete={this.deletePost}
-              showDeleteButton={true}  
+              showDeleteButton={true}
             />
-          )}  
+          )}
         />
-        
+
         {this.state.posts.length === 0 && (
           <Text style={styles.noPostsText}>Aún no hay publicaciones.</Text>
         )}
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f5f5f5',
   },
   header: {
-    fontSize: 24,
+    fontSize: 30,
     fontWeight: 'bold',
     color: '#333',
     marginBottom: 20,

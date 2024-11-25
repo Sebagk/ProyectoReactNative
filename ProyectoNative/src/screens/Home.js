@@ -71,8 +71,9 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   text: {
-    fontSize: 24,
+    fontSize: 30,
     marginBottom: 20,
+    fontWeight: 'bold',
   },
   linkText: {
     color: "blue",

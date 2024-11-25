@@ -20,7 +20,7 @@ export class NewPost extends Component {
       .add({
         owner: auth.currentUser.email,
         text: this.state.text,
-        likes:[],
+        likes: [],
         createdAt: Date.now(),
       })
       .then((response) => {
@@ -38,7 +38,7 @@ export class NewPost extends Component {
         <TextInput
           style={styles.input}
           keyboardType="default"
-          placeholder="Escribe tu post"
+          placeholder="Escriba su post aquí"
           onChangeText={(text) => this.setState({ text: text })}
           value={this.state.text}
         />
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   title: {
-    fontSize: 24,
+    fontSize: 30,
     fontWeight: 'bold',
     marginBottom: 16,
     textAlign: 'center',

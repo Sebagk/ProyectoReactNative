@@ -17,7 +17,7 @@ export class Register extends Component {
     auth.onAuthStateChanged((user) => {
       if (user) {
         console.log("El usuario ya estaba logeado");
-        this.props.navigation.navigate('HomeMenu'); 
+        this.props.navigation.navigate('HomeMenu');
       }
     });
   }
