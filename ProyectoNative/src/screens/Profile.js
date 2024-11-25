@@ -51,22 +51,6 @@ export class Profile extends Component {
       .catch(error => console.log(error));
   };
 
-  deletePost = (postId) => {
-    db.collection("posts")
-      .doc(postId)
-      .update({
-        posts: firebase.firestore.FieldValue.arrayRemove(postId) 
-      })
-      .then(() => {
-        const updatedPosts = this.state.posts.filter(post => post.id !== postId);
-        this.setState({
-          posts: updatedPosts
-        });
-      })
-      .catch((error) => {
-        console.log("Error:", error);
-      });
-  };
 
   render() {
     return (

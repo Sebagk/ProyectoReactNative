@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import {
   View,
   Text,
-  TouchableOpacity,
   StyleSheet,
   FlatList,
 } from "react-native";
@@ -39,21 +38,6 @@ class Home extends Component {
         });
       });
   }
-
-  deletePost = (postId) => {
-    db.collection("posts")
-      .doc(postId)
-      .delete()
-      .then(() => {
-        const postNew = this.state.posts.filter((post) => post.id !== postId);
-        this.setState({
-          posts: postNew,
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
 
   render() {
     return (
