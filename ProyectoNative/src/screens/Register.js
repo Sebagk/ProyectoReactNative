@@ -106,50 +106,47 @@ export class Register extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 25,
+    justifyContent: 'center',
+    padding: 22,
     backgroundColor: '#ecf0f1',
   },
-  header: {
+  title: {
     fontSize: 32,
     fontWeight: '800',
+    textAlign: 'center',
+    marginBottom: 45,
     color: '#2c3e50',
-    marginBottom: 25,
-    textAlign: 'center',
   },
-  infoContainer: {
-    marginBottom: 25,
-    padding: 20,
+  input: {
+    height: 50,
+    borderColor: '#ccc',
+    borderWidth: 1.5,
+    marginBottom: 18,
+    paddingLeft: 12,
+    borderRadius: 10,
     backgroundColor: '#ffffff',
-    borderRadius: 12,
-    shadowColor: '#34495e',
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.15,
-    shadowRadius: 7,
-    elevation: 4,
+    fontSize: 16,
   },
-  infoText: {
-    fontSize: 18,
-    color: '#7f8c8d',
-    marginBottom: 8,
-  },
-  logoutButton: {
-    backgroundColor: '#e74c3c',
-    paddingVertical: 12,
-    borderRadius: 12,
-    alignItems: 'center',
-    marginBottom: 25,
-  },
-  logoutText: {
-    color: '#fff',
-    fontSize: 18,
-    fontWeight: '700',
-  },
-  noPostsText: {
+  errorText: {
+    color: '#e74c3c',
+    fontSize: 15,
+    marginBottom: 12,
     textAlign: 'center',
-    color: '#bdc3c7',
+  },
+  linkButton: {
+    marginTop: 22,
+    paddingVertical: 14,
+    paddingHorizontal: 18,
+    borderRadius: 10,
+    backgroundColor: '#3498db',  
+    alignItems: 'center',
+  },
+  linkText: {
+    color: 'white',
     fontSize: 18,
-    marginTop: 25,
+    fontWeight: '600',
   },
 });
+
 
 export default Register;
